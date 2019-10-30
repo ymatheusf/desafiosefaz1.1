@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Home</title>
+	<h:outputStylesheet library="css" name="login.css" />
+</h:head>
+<h:body>
+	<p:dialog visible="true" width="400" height="500"
+		header="Logar no Sistema" showHeader="false" modal="true"
+		resizable="false">
+		<h:panelGrid style="margin: 0 auto;">
+			<h:outputText styleClass="fa fa-lock fa-5x" />
+		</h:panelGrid>
+		<h:form id="formLogin">
+			<h:panelGrid cellspacing="10">
+                	Digite seu e-mail e senha.                    
+                    <p:messages id="messagesLogin" />
+				<p:inputText placeholder="Usuario" id="login"
+					value="#{loginController.login}" size="45" required="true"
+					requiredMessage="Campo e-mail é obrigatório." rendered="true">
+					<f:validateLength minimum="4" />
+				</p:inputText>
+				<p:password placeholder="Senha" id="senha"
+					value="#{loginController.password}" size="45" required="true"
+					requiredMessage="Campo Senha é obrigatório." rendered="true"
+					autocomplete="off">
+					<f:validateLength minimum="4" />
+				</p:password>
+				<p:commandButton id="logar" value="entrar"
+					action="#{loginController.entrar}" ajax="false" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

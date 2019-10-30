@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>SEFAZ</title>
+	<h:outputStylesheet library="css" name="primefaces.css" />
+</h:head>
+
+<h:body>
+
+	<h:form>
+
+		<p:breadCrumb>
+			<p:menuitem />
+			<p:menuitem value="Sefaz" action="primefaces.xhtml" />
+
+		</p:breadCrumb>
+	</h:form>
+
+	<h:panelGroup>
+		<h:form>
+			<h:commandButton value="Log out" action="#{loginController.logOff()}"
+				style="margin-right:10px; margin-top: 5px; margin-bottom: -10px; margin-left: 1150px;" />
+		</h:form>
+	</h:panelGroup>
+
+	<h:form id="formulario">
+		<p:messages autoUpdate="true" showDetail="true" />
+		<br />
+		<br />
+		<p:panelGrid columns="2">
+
+			<p:outputLabel>ID:</p:outputLabel>
+			<p:inputText readonly="true" value="#{usuarioManagedBean.usuario.id}" />
+
+			<p:outputLabel>Nome:</p:outputLabel>
+			<p:inputText value="#{usuarioManagedBean.usuario.nome}"
+				required="true" requiredMessage="Coloque Seu Nome!" id="idnome">
+				<p:watermark value="Nome!" for="idnome" />
+			</p:inputText>
+
+			<p:outputLabel>E-mail:</p:outputLabel>
+			<p:inputText value="#{usuarioManagedBean.usuario.email}" id="idemail"
+				required="true" requiredMessage="Informe um email!">
+				<p:watermark value="E-mail!" for="idemail" />
+			</p:inputText>
+
+			<p:outputLabel>Senha:</p:outputLabel>
+			<p:password value="#{usuarioManagedBean.usuario.senha}"
+				maxlength="15" required="true"
+				requiredMessage="A Senha deve Conter Letras e Numeros!" />
+
+		</p:panelGrid>
+
+		<br />
+		<br />
+		<p:commandButton value="Editar" ajax="false"
+			action="#{usuarioManagedBean.editar}" />
+
+		<p:commandButton value="Salvar" ajax="false"
+			action="#{usuarioManagedBean.salvar}" />
+
+		<p:commandButton value="Novo" immediate="true"
+			action="#{usuarioManagedBean.novo}">
+			<f:ajax execute="@this" render="@form" />
+		</p:commandButton>
+
+		<br />
+		<br />
+
+	</h:form>
+
+	<h:form id="formtable">
+		<p:dataTable value="#{usuarioManagedBean.obterUsuario()}" var="user">
+			<p:column headerText="ID">
+				<h:outputText value="#{user.id}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{user.nome}" />
+			</p:column>
+
+			<p:column headerText="Email">
+				<h:outputText value="#{user.email}" />
+			</p:column>
+
+			<p:column headerText="Editar">
+				<h:commandLink immediate="true" id="botaoditar">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{usuarioManagedBean.usuario}" />
+					<f:ajax execute="botaoditar" render=":formulario" />
+					<h:graphicImage url="resources/img/editar.png" width="25"
+						height="25" />
+				</h:commandLink>
+			</p:column>
+
+
+			<p:column headerText="Remover">
+				<h:commandLink id="botaoremover"
+					action="#{usuarioManagedBean.remover}">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{usuarioManagedBean.usuario}" />
+					<f:ajax execute="botaoremover" render="@form" />
+					<h:graphicImage url="resources/img/delete_97403.jpg" width="25"
+						height="25" />
+				</h:commandLink>
+			</p:column>
+
+			<p:column headerText="Telefones">
+				<h:commandLink immediate="true" action="telefoneprimefaces.xhtml"
+					id="botaofone">
+					<h:graphicImage url="resources/img/phone.png" width="25"
+						height="25" />
+					<f:param name="codigouser" value="#{user.id}" />
+				</h:commandLink>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+
+</h:body>
+
+</html>
